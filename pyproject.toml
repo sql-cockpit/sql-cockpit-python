@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sqlcockpit"
+dynamic = ["version"]
+description = "Official Python SDK for the SQL Cockpit Portal API."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+authors = [{ name = "SQL Cockpit" }]
+dependencies = ["httpx>=0.23,<1"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.5"]
+
+[project.urls]
+Homepage = "https://sql-cockpit.com"
+Source = "https://github.com/sql-cockpit/sql-cockpit-python"
+
+[tool.hatch.version]
+path = "src/sqlcockpit/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sqlcockpit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "A"]
+ignore = ["UP006", "UP007", "UP035", "UP045"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/sqlcockpit/errors.py" = ["A001"]
+"src/sqlcockpit/__init__.py" = ["A004"]
+"src/sqlcockpit/_core.py" = ["A004"]
+"src/sqlcockpit/models.py" = ["A003"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["sqlcockpit"]
